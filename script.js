@@ -1,0 +1,11 @@
+const menu=document.getElementById('menu'),nav=document.getElementById('navlinks');
+menu.addEventListener('click',()=>{const o=nav.classList.toggle('open');menu.textContent=o?'✕':'☰';document.body.classList.toggle('lock',o)});
+nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menu.textContent='☰';document.body.classList.remove('lock')}));
+document.querySelectorAll('.compare input').forEach(s=>s.addEventListener('input',e=>e.currentTarget.parentElement.style.setProperty('--split',e.currentTarget.value+'%')));
+document.querySelectorAll('.faq-q').forEach(q=>q.addEventListener('click',()=>q.parentElement.classList.toggle('open')));
+const filters=document.querySelectorAll('.filter'),items=document.querySelectorAll('.gallery-item');
+filters.forEach(f=>f.addEventListener('click',()=>{filters.forEach(x=>x.classList.remove('active'));f.classList.add('active');const v=f.dataset.filter;items.forEach(i=>i.classList.toggle('hide',v!=='all'&&i.dataset.category!==v))}));
+const lb=document.getElementById('lightbox'),li=document.getElementById('lightboxImage'),lt=document.getElementById('lightboxTitle');
+items.forEach(i=>i.addEventListener('click',()=>{li.src=i.dataset.src;lt.textContent=i.dataset.title;lb.classList.add('open');document.body.classList.add('lock')}));
+function closeLb(){lb.classList.remove('open');document.body.classList.remove('lock')} document.getElementById('close').addEventListener('click',closeLb);lb.addEventListener('click',e=>{if(e.target===lb)closeLb()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb()});
+document.getElementById('estimateForm').addEventListener('submit',e=>{e.preventDefault();const g=id=>document.getElementById(id).value.trim();const msg=["Hi Scotty's Soft Wash, I'd like a free estimate.","",`Name: ${g('name')}`,`My phone: ${g('phone')}`,`Service: ${g('service')}`,g('city')?`City: ${g('city')}`:"",g('address')?`Property location: ${g('address')}`:"",g('details')?`Project details: ${g('details')}`:""].filter(Boolean).join('\n');const sep=/iPhone|iPad|iPod/i.test(navigator.userAgent)?'&':'?';location.href=`sms:+17656691691${sep}body=${encodeURIComponent(msg)}`});
